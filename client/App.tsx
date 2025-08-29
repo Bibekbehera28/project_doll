@@ -17,6 +17,7 @@ import RecyclingCenters from "./pages/RecyclingCenters";
 import Rewards from "./pages/Rewards";
 import BuyBackPage from "./pages/BuyBack";
 import Analytics from "./pages/Analytics";
+import FootprintPage from "./pages/Footprint";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Assessment from "./pages/Assessment";
