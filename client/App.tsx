@@ -326,6 +326,16 @@ const App = () => {
                   }
                 />
                 <Route
+                  path="/smart-bins"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <SmartBinsPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/rewards"
                   element={
                     <ProtectedRoute>
