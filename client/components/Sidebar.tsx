@@ -59,6 +59,12 @@ const navigationItems = [
     description: "Find nearby facilities",
   },
   {
+    title: "Buy-Back",
+    href: "/buyback",
+    icon: Coins,
+    description: "Sell recyclables",
+  },
+  {
     title: "Eco-Points & Rewards",
     href: "/rewards",
     icon: Award,
