@@ -70,9 +70,20 @@ export default function WastePickup() {
     },
   });
 
+  const { user } = useAuth();
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // TODO: Submit to backend/Supabase
-    console.log(values);
+    const uid = user?.id || 'mock-user-1';
+    await createPickup({
+      user_id: uid,
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      address: values.address,
+      waste_type: values.wasteType as any,
+      pickup_date: values.pickupDate.toISOString(),
+      description: values.description,
+    });
     setSubmitted(true);
   };
 
