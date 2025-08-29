@@ -375,6 +375,16 @@ const App = () => {
                   }
                 />
                 <Route
+                  path="/footprint"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <FootprintPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/leaderboard"
                   element={
                     <ProtectedRoute>
