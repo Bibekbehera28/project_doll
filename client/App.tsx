@@ -303,15 +303,25 @@ const App = () => {
                     </ProtectedRoute>
                   }
                 />
-                <Route 
-                  path="/centers" 
+                <Route
+                  path="/centers"
                   element={
                     <ProtectedRoute>
                       <AppLayout>
                         <RecyclingCenters />
                       </AppLayout>
                     </ProtectedRoute>
-                  } 
+                  }
+                />
+                <Route
+                  path="/buyback"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <BuyBackPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/rewards"
