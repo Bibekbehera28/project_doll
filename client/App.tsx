@@ -343,6 +343,16 @@ const App = () => {
                   }
                 />
                 <Route
+                  path="/messages"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <MessagesPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/analytics"
                   element={
                     <ProtectedRoute>
