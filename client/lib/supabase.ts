@@ -206,29 +206,35 @@ export const useAuth = () => {
     if (!supabase) return;
 
     try {
-      const { data: profile } = await supabase
+      const { data: profile, error: selectError } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('id', user.id)
         .single();
 
+      if (selectError) {
+        console.warn('User profiles table not accessible or protected:', selectError.message || selectError);
+        return; // Skip silently if table missing or RLS blocks access
+      }
+
       if (!profile) {
-        // Create profile if it doesn't exist
+        // Upsert profile if it doesn't exist
         const { error: profileError } = await supabase
           .from('user_profiles')
-          .insert({
+          .upsert({
             id: user.id,
             email: user.email,
             full_name: user.user_metadata?.full_name || user.email?.split('@')[0] || 'User',
             avatar_url: user.user_metadata?.avatar_url,
-          });
+            updated_at: new Date().toISOString(),
+          }, { onConflict: 'id' });
 
         if (profileError) {
-          console.error('Error creating user profile:', profileError);
+          console.error('Error creating user profile:', profileError.message || profileError);
         }
       }
-    } catch (err) {
-      console.error('Error ensuring user profile:', err);
+    } catch (err: any) {
+      console.error('Error ensuring user profile:', err?.message || err);
     }
   };
 
