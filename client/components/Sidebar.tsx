@@ -65,6 +65,12 @@ const navigationItems = [
     description: "Redeem points",
   },
   {
+    title: "Messages",
+    href: "/messages",
+    icon: Bell,
+    description: "Chat with worker",
+  },
+  {
     title: "Community",
     href: "/leaderboard",
     icon: Users,
