@@ -136,7 +136,7 @@ export default function SignupPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6"
+                className="w-16 h-16 bg-gradient-to-br from-eco-primary to-eco-secondary rounded-full flex items-center justify-center mx-auto mb-6"
               >
                 <CheckCircle className="w-8 h-8 text-white" />
               </motion.div>

@@ -204,7 +204,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
               <Recycle className="w-5 h-5 text-white" />
             </motion.div>
             <div>
-              <h1 className="text-lg font-bold text-white">EcoSort</h1>
+              <h1 className="text-lg font-bold text-white">Green India</h1>
               <p className="text-xs text-gray-400">Smart Waste Management</p>
             </div>
           </motion.div>
