@@ -74,7 +74,7 @@ export default function WastePickup() {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const uid = user?.id || 'mock-user-1';
-    await createPickup({
+    const pickup = await createPickup({
       user_id: uid,
       name: values.name,
       email: values.email,
@@ -84,6 +84,12 @@ export default function WastePickup() {
       pickup_date: values.pickupDate.toISOString(),
       description: values.description,
     });
+    try {
+      const { requestPermission, scheduleReminder } = await import('@/lib/notifications');
+      requestPermission();
+      const reminderTime = new Date(new Date(values.pickupDate).getTime() - 60 * 60 * 1000);
+      scheduleReminder(reminderTime, 'Pickup reminder', { body: `Pickup today for ${pickup.waste_type}` });
+    } catch {}
     setSubmitted(true);
   };
 
