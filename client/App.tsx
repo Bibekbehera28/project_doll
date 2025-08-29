@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import WasteClassification from "./pages/WasteClassification";
 import RecyclingCenters from "./pages/RecyclingCenters";
 import Rewards from "./pages/Rewards";
+import BuyBackPage from "./pages/BuyBack";
 import Analytics from "./pages/Analytics";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
