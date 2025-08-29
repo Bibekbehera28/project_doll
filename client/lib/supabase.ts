@@ -239,8 +239,19 @@ export const useAuth = () => {
   };
 
   const signInWithEmail = async (email: string, password: string) => {
-    if (!supabase) throw new Error('Supabase not configured');
     setError(null);
+
+    if (!supabase) {
+      const mock: any = {
+        id: 'mock-user-1',
+        email,
+        app_metadata: { provider: 'email' },
+        user_metadata: { full_name: email.split('@')[0] }
+      };
+      setUser(mock as User);
+      setSession(null);
+      return { user: mock, session: null } as any;
+    }
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -256,8 +267,19 @@ export const useAuth = () => {
   };
 
   const signUpWithEmail = async (email: string, password: string, metadata?: { full_name?: string }) => {
-    if (!supabase) throw new Error('Supabase not configured');
     setError(null);
+
+    if (!supabase) {
+      const mock: any = {
+        id: 'mock-user-1',
+        email,
+        app_metadata: { provider: 'email' },
+        user_metadata: { full_name: metadata?.full_name || email.split('@')[0] }
+      };
+      setUser(mock as User);
+      setSession(null);
+      return { user: mock, session: null } as any;
+    }
 
     const { data, error } = await supabase.auth.signUp({
       email,
