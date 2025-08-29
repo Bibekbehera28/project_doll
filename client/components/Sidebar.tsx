@@ -41,6 +41,18 @@ const navigationItems = [
     description: "AI classification",
   },
   {
+    title: "Schedule Pickup",
+    href: "/pickup",
+    icon: Bell,
+    description: "Book collection",
+  },
+  {
+    title: "Report Issue",
+    href: "/report",
+    icon: Users,
+    description: "Dumping/Hazard",
+  },
+  {
     title: "Recycling Centers",
     href: "/centers",
     icon: MapPin,
