@@ -47,6 +47,12 @@ const navigationItems = [
     description: "Book collection",
   },
   {
+    title: "Smart Bins",
+    href: "/smart-bins",
+    icon: MapPin,
+    description: "IoT demo",
+  },
+  {
     title: "Report Issue",
     href: "/report",
     icon: Users,
