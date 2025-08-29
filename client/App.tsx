@@ -24,6 +24,7 @@ import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
 import WastePickup from "./pages/WastePickup";
 import ReportIssue from "./pages/ReportIssue";
+import MessagesPage from "./pages/Messages";
 
 // Import components
 import Layout from "./components/Layout";
