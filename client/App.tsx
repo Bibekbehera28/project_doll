@@ -22,6 +22,8 @@ import Assessment from "./pages/Assessment";
 import ARScanner from "./pages/ARScanner";
 import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
+import WastePickup from "./pages/WastePickup";
+import ReportIssue from "./pages/ReportIssue";
 
 // Import components
 import Layout from "./components/Layout";
@@ -309,15 +311,35 @@ const App = () => {
                     </ProtectedRoute>
                   } 
                 />
-                <Route 
-                  path="/rewards" 
+                <Route
+                  path="/rewards"
                   element={
                     <ProtectedRoute>
                       <AppLayout>
                         <Rewards />
                       </AppLayout>
                     </ProtectedRoute>
-                  } 
+                  }
+                />
+                <Route
+                  path="/pickup"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <WastePickup />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/report"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <ReportIssue />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/analytics"
