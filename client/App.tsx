@@ -23,6 +23,7 @@ import About from "./pages/About";
 import Assessment from "./pages/Assessment";
 import ARScanner from "./pages/ARScanner";
 import Leaderboard from "./pages/Leaderboard";
+import SmartBinsPage from "./pages/SmartBins";
 import NotFound from "./pages/NotFound";
 import WastePickup from "./pages/WastePickup";
 import ReportIssue from "./pages/ReportIssue";
