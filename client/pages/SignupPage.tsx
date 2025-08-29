@@ -169,7 +169,7 @@ export default function SignupPage() {
       {/* Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <motion.div
-          className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-green-500/10 to-blue-500/10 rounded-full blur-xl"
+          className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-eco-primary/10 to-eco-secondary/10 rounded-full blur-xl"
           animate={{
             x: [0, -50, 0],
             y: [0, 30, 0],
@@ -214,13 +214,13 @@ export default function SignupPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex justify-center mb-4"
             >
-              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="w-16 h-16 bg-gradient-to-br from-eco-primary to-eco-secondary rounded-2xl flex items-center justify-center shadow-lg">
                 <Recycle className="w-8 h-8 text-white" />
               </div>
             </motion.div>
             
             <CardTitle className="text-2xl font-bold text-white mb-2">
-              Join EcoSort Today!
+              Join Green India Today!
             </CardTitle>
             <CardDescription className="text-gray-400">
               Start your journey towards sustainable living and earn rewards
@@ -257,7 +257,7 @@ export default function SignupPage() {
                     placeholder="Enter your full name"
                     value={formData.fullName}
                     onChange={(e) => handleInputChange("fullName", e.target.value)}
-                    className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-green-500"
+                    className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-eco-primary"
                     disabled={isLoading}
                   />
                 </div>
@@ -279,7 +279,7 @@ export default function SignupPage() {
                     placeholder="Enter your email"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-green-500"
+                    className="pl-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-eco-primary"
                     disabled={isLoading}
                   />
                 </div>
@@ -301,7 +301,7 @@ export default function SignupPage() {
                     placeholder="Create a password"
                     value={formData.password}
                     onChange={(e) => handleInputChange("password", e.target.value)}
-                    className="pl-10 pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-green-500"
+                    className="pl-10 pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-eco-primary"
                     disabled={isLoading}
                   />
                   <Button
@@ -333,7 +333,7 @@ export default function SignupPage() {
                     placeholder="Confirm your password"
                     value={formData.confirmPassword}
                     onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
-                    className="pl-10 pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-green-500"
+                    className="pl-10 pr-10 bg-slate-700/50 border-slate-600 text-white placeholder:text-gray-400 focus:border-eco-primary"
                     disabled={isLoading}
                   />
                   <Button
@@ -363,7 +363,7 @@ export default function SignupPage() {
                       setFormErrors(prev => ({ ...prev, terms: "" }));
                     }
                   }}
-                  className="mt-1 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600"
+                  className="mt-1 data-[state=checked]:bg-eco-primary data-[state=checked]:border-eco-primary"
                   disabled={isLoading}
                 />
                 <Label
@@ -371,11 +371,11 @@ export default function SignupPage() {
                   className="text-sm text-gray-300 leading-relaxed cursor-pointer"
                 >
                   I agree to the{" "}
-                  <a href="#" className="text-green-400 hover:text-green-300 underline">
+                  <a href="#" className="text-eco-primary hover:opacity-90 underline">
                     Terms of Service
                   </a>{" "}
                   and{" "}
-                  <a href="#" className="text-green-400 hover:text-green-300 underline">
+                  <a href="#" className="text-eco-primary hover:opacity-90 underline">
                     Privacy Policy
                   </a>
                 </Label>
@@ -391,7 +391,7 @@ export default function SignupPage() {
               >
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium py-3 shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="w-full bg-gradient-to-r from-eco-primary to-eco-secondary hover:opacity-90 text-white font-medium py-3 shadow-lg hover:shadow-xl transition-all duration-300"
                   disabled={isLoading || loading}
                 >
                   {isLoading || loading ? (
@@ -456,7 +456,7 @@ export default function SignupPage() {
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-green-400 hover:text-green-300 font-medium hover:underline transition-colors"
+                  className="text-eco-primary hover:opacity-90 font-medium hover:underline transition-colors"
                 >
                   Sign in here
                 </Link>
