@@ -22,7 +22,7 @@ const About: React.FC = () => {
           <CardContent className="space-y-4">
             <p>
               We believe technology can empower communities to reduce waste, recycle more, and protect our planet. 
-              EcoSort combines AI-driven waste classification, location services, and gamification to make sustainable actions effortless and rewarding.
+              Green India combines AI-driven waste classification, location services, and gamification to make sustainable actions effortless and rewarding.
             </p>
             <div className="grid sm:grid-cols-3 gap-3">
               <div className="p-4 rounded-lg bg-muted/30 text-center">
@@ -75,4 +75,3 @@ const About: React.FC = () => {
 };
 
 export default About;
-
