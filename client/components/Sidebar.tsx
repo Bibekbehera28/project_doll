@@ -88,6 +88,12 @@ const navigationItems = [
     icon: BarChart3,
     description: "Track impact",
   },
+  {
+    title: "Footprint",
+    href: "/footprint",
+    icon: TrendingUp,
+    description: "CO₂ & trees saved",
+  },
 ];
 
 const bottomItems = [
