@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { useAuth } from '../App';
-import { useTheme } from './ThemeProvider';
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { useAuth } from "../App";
+import { useTheme } from "./ThemeProvider";
+import { useAuth as useSbAuth } from "@/lib/supabase";
 import {
   Recycle,
   Home,
@@ -22,52 +23,59 @@ import {
   Sun,
   Moon,
   Computer,
-  Coins
-} from 'lucide-react';
+  Coins,
+} from "lucide-react";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
+  const { signOut: sbSignOut } = useSbAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
 
   const navigationItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: Home },
-    { path: '/assessment', label: 'Assessment', icon: Recycle },
-    { path: '/classify', label: 'Classify', icon: Camera },
-    { path: '/centers', label: 'Centers', icon: MapPin },
-    { path: '/rewards', label: 'Rewards', icon: Award },
-    { path: '/analytics', label: 'Analytics', icon: BarChart3 },
-    { path: '/about', label: 'About', icon: Info },
+    { path: "/dashboard", label: "Dashboard", icon: Home },
+    { path: "/assessment", label: "Assessment", icon: Recycle },
+    { path: "/classify", label: "Classify", icon: Camera },
+    { path: "/centers", label: "Centers", icon: MapPin },
+    { path: "/rewards", label: "Rewards", icon: Award },
+    { path: "/analytics", label: "Analytics", icon: BarChart3 },
+    { path: "/about", label: "About", icon: Info },
   ];
 
   const isActivePath = (path: string) => location.pathname === path;
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await sbSignOut?.();
+    } catch {}
     logout();
-    navigate('/');
+    navigate("/");
   };
 
   const cycleTheme = () => {
-    if (theme === 'light') setTheme('dark');
-    else if (theme === 'dark') setTheme('system');
-    else setTheme('light');
+    if (theme === "light") setTheme("dark");
+    else if (theme === "dark") setTheme("system");
+    else setTheme("light");
   };
 
   const getThemeIcon = () => {
     switch (theme) {
-      case 'light': return <Sun className="w-4 h-4" />;
-      case 'dark': return <Moon className="w-4 h-4" />;
-      default: return <Computer className="w-4 h-4" />;
+      case "light":
+        return <Sun className="w-4 h-4" />;
+      case "dark":
+        return <Moon className="w-4 h-4" />;
+      default:
+        return <Computer className="w-4 h-4" />;
     }
   };
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <motion.header 
+      <motion.header
         className="bg-background/95 backdrop-blur-lg border-b border-border sticky top-0 z-50 shadow-sm"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
@@ -76,11 +84,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <motion.div 
+            <motion.div
               className="flex items-center gap-3"
               whileHover={{ scale: 1.05 }}
             >
-              <motion.div 
+              <motion.div
                 className="w-10 h-10 bg-gradient-to-br from-eco-primary to-eco-secondary rounded-xl flex items-center justify-center shadow-lg"
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.8 }}
@@ -91,7 +99,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <h1 className="text-xl font-bold bg-gradient-to-r from-eco-primary to-eco-secondary bg-clip-text text-transparent">
                   Green India
                 </h1>
-                <p className="text-sm text-muted-foreground">Smart Waste Management</p>
+                <p className="text-sm text-muted-foreground">
+                  Smart Waste Management
+                </p>
               </div>
             </motion.div>
 
@@ -106,8 +116,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     <Button
                       variant={isActivePath(item.path) ? "default" : "ghost"}
                       className={`flex items-center gap-2 ${
-                        isActivePath(item.path) 
-                          ? "bg-gradient-to-r from-eco-primary to-eco-secondary text-white" 
+                        isActivePath(item.path)
+                          ? "bg-gradient-to-r from-eco-primary to-eco-secondary text-white"
                           : ""
                       }`}
                     >
@@ -122,7 +132,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             {/* Right side actions */}
             <div className="flex items-center gap-3">
               {/* Points display */}
-              <motion.div 
+              <motion.div
                 className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/30 dark:to-yellow-900/30 rounded-full px-3 py-1.5"
                 whileHover={{ scale: 1.05 }}
               >
@@ -138,25 +148,19 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 className="hidden sm:block"
               >
                 <Badge className="bg-gradient-to-r from-eco-primary to-eco-secondary text-white border-0">
-                  {user?.level || 'Beginner'}
+                  {user?.level || "Beginner"}
                 </Badge>
               </motion.div>
 
               {/* Theme toggle */}
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
+              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Button size="icon" variant="ghost" onClick={cycleTheme}>
                   {getThemeIcon()}
                 </Button>
               </motion.div>
 
               {/* Notifications */}
-              <motion.div
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
+              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Button size="icon" variant="ghost" className="relative">
                   <Bell className="w-5 h-5" />
                   <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
@@ -171,8 +175,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   whileHover={{ scale: 1.05 }}
                 >
                   {user?.avatar ? (
-                    <img 
-                      src={user.avatar} 
+                    <img
+                      src={user.avatar}
                       alt={user.name}
                       className="w-8 h-8 rounded-full object-cover"
                     />
@@ -181,7 +185,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       <User className="w-4 h-4 text-white" />
                     </div>
                   )}
-                  <span className="hidden sm:block text-sm font-medium">{user?.name}</span>
+                  <span className="hidden sm:block text-sm font-medium">
+                    {user?.name}
+                  </span>
                 </motion.button>
 
                 {/* Profile dropdown */}
@@ -193,16 +199,16 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       exit={{ opacity: 0, y: 10 }}
                       className="absolute right-0 mt-2 w-48 bg-background border border-border rounded-lg shadow-lg py-2 z-50"
                     >
-                      <Link 
-                        to="/profile" 
+                      <Link
+                        to="/profile"
                         className="flex items-center gap-2 px-4 py-2 hover:bg-accent transition-colors"
                         onClick={() => setProfileMenuOpen(false)}
                       >
                         <User className="w-4 h-4" />
                         Profile
                       </Link>
-                      <Link 
-                        to="/profile" 
+                      <Link
+                        to="/profile"
                         className="flex items-center gap-2 px-4 py-2 hover:bg-accent transition-colors"
                         onClick={() => setProfileMenuOpen(false)}
                       >
@@ -210,7 +216,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                         Settings
                       </Link>
                       <hr className="my-2 border-border" />
-                      <button 
+                      <button
                         onClick={handleLogout}
                         className="flex items-center gap-2 px-4 py-2 hover:bg-accent transition-colors w-full text-left text-red-600"
                       >
@@ -245,33 +251,40 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 lg:hidden"
           >
-            <div className="fixed inset-0 bg-black/20 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />
+            <div
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            />
             <motion.div
-              initial={{ x: '100%' }}
+              initial={{ x: "100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
               className="fixed right-0 top-0 h-full w-80 bg-background border-l border-border shadow-lg"
             >
               <div className="flex items-center justify-between p-4 border-b border-border">
                 <h2 className="text-lg font-semibold">Navigation</h2>
-                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   <X className="w-5 h-5" />
                 </Button>
               </div>
-              
+
               <nav className="p-4 space-y-2">
                 {navigationItems.map((item) => (
-                  <Link 
-                    key={item.path} 
+                  <Link
+                    key={item.path}
                     to={item.path}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <motion.div
                       whileHover={{ x: 5 }}
                       className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
-                        isActivePath(item.path) 
-                          ? "bg-gradient-to-r from-eco-primary to-eco-secondary text-white" 
+                        isActivePath(item.path)
+                          ? "bg-gradient-to-r from-eco-primary to-eco-secondary text-white"
                           : "hover:bg-accent"
                       }`}
                     >
@@ -286,8 +299,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border">
                 <div className="flex items-center gap-3 mb-3">
                   {user?.avatar ? (
-                    <img 
-                      src={user.avatar} 
+                    <img
+                      src={user.avatar}
                       alt={user.name}
                       className="w-10 h-10 rounded-full object-cover"
                     />
@@ -298,12 +311,14 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   )}
                   <div>
                     <p className="font-medium text-sm">{user?.name}</p>
-                    <p className="text-xs text-muted-foreground">{user?.points?.toLocaleString()} points</p>
+                    <p className="text-xs text-muted-foreground">
+                      {user?.points?.toLocaleString()} points
+                    </p>
                   </div>
                 </div>
-                <Button 
+                <Button
                   onClick={handleLogout}
-                  variant="outline" 
+                  variant="outline"
                   className="w-full"
                 >
                   <LogOut className="w-4 h-4 mr-2" />
@@ -316,14 +331,12 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </AnimatePresence>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4">
-        {children}
-      </main>
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4">{children}</main>
 
       {/* Click outside handler for profile menu */}
       {profileMenuOpen && (
-        <div 
-          className="fixed inset-0 z-40" 
+        <div
+          className="fixed inset-0 z-40"
           onClick={() => setProfileMenuOpen(false)}
         />
       )}

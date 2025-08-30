@@ -85,50 +85,17 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for stored user session
-    const storedUser = localStorage.getItem("ecosort_user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
+    // Clear any legacy mock user and start unauthenticated
+    try {
+      localStorage.removeItem("ecosort_user");
+    } catch {}
     setLoading(false);
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
+    // Disable mock login; rely on Supabase auth flows elsewhere
     setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    // Mock successful login for demo@ecosort.app
-    if (email === "demo@ecosort.app" && password === "password") {
-      const mockUser: User = {
-        id: "user-123",
-        name: "Alex Chen",
-        email: email,
-        avatar:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-        points: 2156,
-        level: "Eco Champion",
-        wasteClassified: 187,
-        joinedDate: "2024-01-15",
-        ecoScore: 89,
-        badges: [
-          "first-sort",
-          "eco-warrior",
-          "plastic-saver",
-          "green-champion",
-        ],
-        preferences: {
-          darkMode: false,
-          notifications: true,
-          language: "en",
-        },
-      };
-      setUser(mockUser);
-      localStorage.setItem("ecosort_user", JSON.stringify(mockUser));
-      setLoading(false);
-      return true;
-    }
-
+    await new Promise((resolve) => setTimeout(resolve, 300));
     setLoading(false);
     return false;
   };
@@ -138,31 +105,11 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     email: string,
     password: string,
   ): Promise<boolean> => {
+    // Disable mock signup; rely on Supabase auth flows elsewhere
     setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    const mockUser: User = {
-      id: `user-${Date.now()}`,
-      name: name,
-      email: email,
-      points: 0,
-      level: "Beginner",
-      wasteClassified: 0,
-      joinedDate: new Date().toISOString().split("T")[0],
-      ecoScore: 0,
-      badges: [],
-      preferences: {
-        darkMode: false,
-        notifications: true,
-        language: "en",
-      },
-    };
-
-    setUser(mockUser);
-    localStorage.setItem("ecosort_user", JSON.stringify(mockUser));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     setLoading(false);
-    return true;
+    return false;
   };
 
   const logout = () => {
@@ -174,7 +121,6 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (user) {
       const updatedUser = { ...user, ...updates };
       setUser(updatedUser);
-      localStorage.setItem("ecosort_user", JSON.stringify(updatedUser));
     }
   };
 
