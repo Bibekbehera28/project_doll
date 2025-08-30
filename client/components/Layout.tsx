@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useAuth } from '../App';
 import { useTheme } from './ThemeProvider';
+import { useAuth as useSbAuth } from "@/lib/supabase";
 import {
   Recycle,
   Home,
@@ -28,6 +29,7 @@ import {
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
+  const { signOut: sbSignOut } = useSbAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -45,7 +47,10 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
   const isActivePath = (path: string) => location.pathname === path;
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await sbSignOut?.();
+    } catch {}
     logout();
     navigate('/');
   };
