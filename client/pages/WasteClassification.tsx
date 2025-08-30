@@ -51,6 +51,7 @@ const categoryMeta: Record<ManualCategory, { label: string; icon: React.Componen
 
 const WasteClassification: React.FC = () => {
   const { user } = useAuth();
+  const { user: sbUser } = useSbAuth();
   const { classifyWaste, loading, modelReady } = useWasteClassification();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
