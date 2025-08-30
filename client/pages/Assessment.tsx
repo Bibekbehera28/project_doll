@@ -10,11 +10,14 @@ import { Camera, Upload, MapPin, QrCode, CheckCircle2, Loader2 } from 'lucide-re
 import { useWasteClassification, validateImageForClassification } from '@/lib/ml-integration';
 import { useGeolocation, useRecyclingCentersSearch, getDirectionsUrl, RecyclingFacility } from '@/lib/openstreetmap';
 import { useAuth } from '../App';
+import { useAuth as useSbAuth } from '@/lib/supabase';
+import { awardPoints } from '@/lib/voucher-operations';
 
 type Step = 1 | 2 | 3 | 4;
 
 const Assessment: React.FC = () => {
   const { user, updateUser } = useAuth();
+  const { user: sbUser } = useSbAuth();
   const { classifyWaste, loading: classifying } = useWasteClassification();
   const { location, getCurrentLocation } = useGeolocation();
   const { centers, searchNearbyRecyclingCenters, loading: searching } = useRecyclingCentersSearch();
@@ -63,9 +66,18 @@ const Assessment: React.FC = () => {
     setVerified(ok);
     setVerifying(false);
     if (ok) {
-      // Award points
+      // Award points and persist when Supabase user is available
       const bonus = 10;
-      updateUser({ points: (user?.points || 0) + bonus });
+      try {
+        if (sbUser?.id) {
+          await awardPoints(sbUser.id, bonus, 'QR verified at recycling center');
+        } else {
+          updateUser({ points: (user?.points || 0) + bonus });
+        }
+      } catch (e) {
+        console.error('Point award failed:', e);
+        updateUser({ points: (user?.points || 0) + bonus });
+      }
       setStep(4);
     }
   };
@@ -221,5 +233,3 @@ const Assessment: React.FC = () => {
 };
 
 export default Assessment;
-
-
