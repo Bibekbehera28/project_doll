@@ -349,8 +349,14 @@ export const useAuth = () => {
   };
 
   const signOut = async () => {
-    if (!supabase) throw new Error('Supabase not configured');
     setError(null);
+
+    if (!supabase) {
+      // Mock sign out: clear local state
+      setUser(null);
+      setSession(null);
+      return;
+    }
 
     const { error } = await supabase.auth.signOut();
 
