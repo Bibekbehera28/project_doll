@@ -137,6 +137,15 @@ const WasteClassification: React.FC = () => {
                   setPreviewUrl(URL.createObjectURL(file));
                   const classification = await classifyWaste(file);
                   setResult(classification);
+                  try {
+                    const type = (classification?.type || 'recyclable') as keyof typeof defaults.pointsPerClassification;
+                    const pts = defaults.pointsPerClassification[type] ?? 10;
+                    if (sbUser?.id) {
+                      await awardPoints(sbUser.id, pts, `Classified ${type} waste`);
+                    }
+                  } catch (e) {
+                    console.error('Failed to persist points:', e);
+                  }
                   setProcessing(false);
                 }} />
               </div>
