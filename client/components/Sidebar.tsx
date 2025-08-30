@@ -42,6 +42,12 @@ const navigationItems = [
     description: "AI classification",
   },
   {
+    title: "Assessment",
+    href: "/assessment",
+    icon: Target,
+    description: "Eco readiness",
+  },
+  {
     title: "Schedule Pickup",
     href: "/pickup",
     icon: Bell,

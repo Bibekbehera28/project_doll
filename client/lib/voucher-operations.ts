@@ -294,7 +294,8 @@ export const awardPoints = async (
       metadata,
     });
   } catch (error) {
-    console.error("Award points failed:", error);
+    const msg = (error as any)?.message || JSON.stringify(error);
+    console.warn("Award points failed:", msg);
     throw error;
   }
 };

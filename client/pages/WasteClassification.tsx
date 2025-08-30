@@ -75,7 +75,7 @@ const categoryMeta: Record<
 };
 
 const WasteClassification: React.FC = () => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const { user: sbUser } = useSbAuth();
   const { classifyWaste, loading, modelReady } = useWasteClassification();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -110,7 +110,12 @@ const WasteClassification: React.FC = () => {
           await awardPoints(sbUser.id, pts, `Classified ${type} waste`);
         }
       } catch (e) {
-        console.error("Failed to persist points:", e);
+        const msg = (e as any)?.message || String(e);
+        console.warn("Failed to persist points:", msg);
+        const type = (classification?.type ||
+          "recyclable") as keyof typeof defaults.pointsPerClassification;
+        const pts = defaults.pointsPerClassification[type] ?? 10;
+        updateUser?.({ points: (user?.points || 0) + pts });
       }
       setProcessing(false);
     },

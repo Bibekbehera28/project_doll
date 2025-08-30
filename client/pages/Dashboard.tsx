@@ -28,6 +28,7 @@ import {
   Zap,
   Users,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // Import our integration hooks
 import {
@@ -221,6 +222,36 @@ export default function Dashboard() {
         </div>
       </motion.div>
 
+      {/* Assessment CTA Banner */}
+      <motion.div variants={itemVariants}>
+        <Card className="border-0 overflow-hidden">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-eco-primary via-eco-secondary to-eco-accent" />
+            <CardContent className="relative z-10 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white">
+              <div className="flex items-start gap-3">
+                <div className="p-3 rounded-xl bg-white/10">
+                  <Target className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold">
+                    Start your Assessment
+                  </h2>
+                  <p className="text-white/90">
+                    Scan waste → Select center → Scan QR → Earn rewards
+                  </p>
+                </div>
+              </div>
+              <Link to="/assessment">
+                <Button className="bg-white text-eco-primary hover:bg-white/90">
+                  Start Assessment
+                  <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </Link>
+            </CardContent>
+          </div>
+        </Card>
+      </motion.div>
+
       {/* Metric Cards */}
       <motion.div
         variants={containerVariants}
@@ -368,6 +399,13 @@ export default function Dashboard() {
                   icon: Camera,
                   color: "from-green-500 to-emerald-600",
                   href: "/scan",
+                },
+                {
+                  title: "Assessment",
+                  description: "Eco readiness",
+                  icon: Target,
+                  color: "from-teal-500 to-cyan-600",
+                  href: "/assessment",
                 },
                 {
                   title: "Find Centers",
