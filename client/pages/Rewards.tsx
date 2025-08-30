@@ -72,7 +72,6 @@ import {
 
 // Import auth and user data
 import { useAuth, useUserProfile, mockData, supabase } from "@/lib/supabase";
-import DashboardLayout from "@/components/DashboardLayout";
 
 // Component for animated counter
 const AnimatedCounter = ({
