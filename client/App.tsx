@@ -30,7 +30,7 @@ import ReportIssue from "./pages/ReportIssue";
 import MessagesPage from "./pages/Messages";
 
 // Import components
-import Layout from "./components/Layout";
+import DashboardLayout from "./components/DashboardLayout";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { useAuth as useSupabaseAuth } from "@/lib/supabase";
 import { validateConfig } from "@/lib/config";
@@ -206,14 +206,14 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return !isAuthed ? <>{children}</> : <Navigate to="/dashboard" replace />;
 };
 
-// Layout wrapper for authenticated pages
+// Unified layout wrapper (always shows Sidebar via DashboardLayout)
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <Layout>
+    <DashboardLayout>
       {children}
       <Toaster />
       <Sonner />
-    </Layout>
+    </DashboardLayout>
   );
 };
 
@@ -235,25 +235,31 @@ const App = () => {
                   path="/" 
                   element={
                     <PublicRoute>
-                      <LandingPage />
+                      <AppLayout>
+                        <LandingPage />
+                      </AppLayout>
                     </PublicRoute>
-                  } 
+                  }
                 />
                 <Route 
                   path="/login" 
                   element={
                     <PublicRoute>
-                      <LoginPage />
+                      <AppLayout>
+                        <LoginPage />
+                      </AppLayout>
                     </PublicRoute>
-                  } 
+                  }
                 />
                 <Route 
                   path="/signup" 
                   element={
                     <PublicRoute>
-                      <SignupPage />
+                      <AppLayout>
+                        <SignupPage />
+                      </AppLayout>
                     </PublicRoute>
-                  } 
+                  }
                 />
                 
                 {/* Protected Routes */}
