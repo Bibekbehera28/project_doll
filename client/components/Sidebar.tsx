@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -20,7 +20,8 @@ import {
   TrendingUp,
   Bell,
 } from "lucide-react";
-import { useAuth, useUserProfile, mockData } from "@/lib/supabase";
+import { useAuth as useSbAuth, useUserProfile, mockData } from "@/lib/supabase";
+import { useAuth as useAppAuth } from "../App";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -113,8 +114,10 @@ const bottomItems = [
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const location = useLocation();
-  const { user, signOut } = useAuth();
-  const { profile } = useUserProfile(user?.id);
+  const navigate = useNavigate();
+  const { user: sbUser, signOut: sbSignOut } = useSbAuth();
+  const { user: appUser, logout: appLogout } = useAppAuth();
+  const { profile } = useUserProfile(sbUser?.id);
   const userData = profile || mockData.userProfile;
 
   const sidebarVariants: any = {
@@ -159,10 +162,16 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
   const handleLogout = async () => {
     try {
-      await signOut();
+      await sbSignOut?.();
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.warn("Supabase signOut failed or not configured:", (error as any)?.message || error);
     }
+    try {
+      appLogout?.();
+    } catch (e) {
+      console.warn("App logout failed:", (e as any)?.message || e);
+    }
+    navigate('/login');
   };
 
   return (
