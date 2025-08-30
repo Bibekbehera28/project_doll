@@ -180,7 +180,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     } catch (e) {
       console.warn("App logout failed:", (e as any)?.message || e);
     }
-    navigate("/login");
+    navigate("/");
   };
 
   return (
