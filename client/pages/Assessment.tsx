@@ -111,7 +111,8 @@ const Assessment: React.FC = () => {
           updateUser({ points: (user?.points || 0) + bonus });
         }
       } catch (e) {
-        console.error("Point award failed:", e);
+        const msg = (e as any)?.message || String(e);
+        console.warn("Point award failed:", msg);
         updateUser({ points: (user?.points || 0) + bonus });
       }
       setStep(4);
