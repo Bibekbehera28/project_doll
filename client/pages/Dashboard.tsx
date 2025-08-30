@@ -25,7 +25,6 @@ import {
 
 // Import our integration hooks
 import { useAuth, useUserProfile, useWasteClassifications, mockData } from "@/lib/supabase";
-import DashboardLayout from "@/components/DashboardLayout";
 
 // Dashboard stats interface
 interface DashboardStats {
@@ -167,7 +166,6 @@ export default function Dashboard() {
   ];
 
   return (
-    <DashboardLayout>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -436,6 +434,5 @@ export default function Dashboard() {
           </Card>
         </motion.div>
       </motion.div>
-    </DashboardLayout>
   );
 }
