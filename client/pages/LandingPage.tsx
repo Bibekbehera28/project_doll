@@ -283,7 +283,7 @@ const LandingPage: React.FC = () => {
 
       {/* Enhanced Header */}
       <motion.header
-        className="bg-white/90 backdrop-blur-xl border-b border-slate-200/50 sticky top-0 z-50 shadow-sm"
+        className="bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 sticky top-0 z-50 shadow-sm"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -313,7 +313,7 @@ const LandingPage: React.FC = () => {
             <div className="flex items-center gap-4">
               <motion.button
                 onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-                className="p-2 rounded-xl hover:bg-slate-100 transition-colors"
+                className="p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
@@ -321,7 +321,7 @@ const LandingPage: React.FC = () => {
               </motion.button>
 
               <Link to="/login">
-                <Button variant="ghost" className="hidden sm:inline-flex">
+                <Button variant="outline" className="inline-flex">
                   Sign In
                 </Button>
               </Link>
