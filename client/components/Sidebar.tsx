@@ -31,7 +31,7 @@ interface SidebarProps {
 const navigationItems = [
   {
     title: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: Home,
     description: "Overview & statistics",
   },
