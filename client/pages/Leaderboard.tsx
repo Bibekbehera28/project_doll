@@ -18,7 +18,6 @@ import {
   Calendar,
   Crown,
 } from "lucide-react";
-import DashboardLayout from "@/components/DashboardLayout";
 
 // Mock leaderboard data
 const mockLeaderboardData = [
@@ -127,7 +126,6 @@ export default function Leaderboard() {
   };
 
   return (
-    <DashboardLayout>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -346,6 +344,5 @@ export default function Leaderboard() {
           </Tabs>
         </motion.div>
       </motion.div>
-    </DashboardLayout>
   );
 }
