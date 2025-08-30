@@ -1,9 +1,21 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useAuth as useAppAuth } from "../App";
 import { useAuth as useSbAuth, useUserProfile } from "@/lib/supabase";
@@ -66,37 +78,61 @@ export default function Settings() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <Card className="bg-slate-800/50 border-slate-700/50" style={{ backgroundColor: "rgb(15, 23, 42)" }}>
+      <Card
+        className="bg-slate-800/50 border-slate-700/50"
+        style={{ backgroundColor: "rgb(15, 23, 42)" }}
+      >
         <CardHeader>
           <CardTitle className="text-white">Account Settings</CardTitle>
-          <CardDescription className="text-gray-400">Manage your profile and preferences</CardDescription>
+          <CardDescription className="text-gray-400">
+            Manage your profile and preferences
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           {message && (
-            <div className="p-3 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">{message}</div>
+            <div className="p-3 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+              {message}
+            </div>
           )}
           {error && (
-            <div className="p-3 rounded bg-red-500/10 border border-red-500/30 text-red-400">{error}</div>
+            <div className="p-3 rounded bg-red-500/10 border border-red-500/30 text-red-400">
+              {error}
+            </div>
           )}
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label className="text-gray-300">Full Name</Label>
-              <Input value={fullName} onChange={(e) => setFullName(e.target.value)} className="bg-slate-700/50 border-slate-600 text-white" />
+              <Input
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="bg-slate-700/50 border-slate-600 text-white"
+              />
             </div>
             <div className="space-y-2">
               <Label className="text-gray-300">Email</Label>
-              <Input value={email} disabled className="bg-slate-700/50 border-slate-600 text-white" />
+              <Input
+                value={email}
+                disabled
+                className="bg-slate-700/50 border-slate-600 text-white"
+              />
             </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="flex items-center justify-between rounded-lg border border-slate-700/50 bg-slate-700/30 p-4">
               <div>
-                <div className="font-medium text-white">Email Notifications</div>
-                <div className="text-sm text-gray-400">Receive updates about activity</div>
+                <div className="font-medium text-white">
+                  Email Notifications
+                </div>
+                <div className="text-sm text-gray-400">
+                  Receive updates about activity
+                </div>
               </div>
-              <Switch checked={notifications} onCheckedChange={setNotifications} />
+              <Switch
+                checked={notifications}
+                onCheckedChange={setNotifications}
+              />
             </div>
             <div className="flex items-center justify-between rounded-lg border border-slate-700/50 bg-slate-700/30 p-4">
               <div>
@@ -122,7 +158,11 @@ export default function Settings() {
           </div>
 
           <div className="flex justify-end">
-            <Button onClick={onSave} disabled={saving} className="bg-green-600 hover:bg-green-700">
+            <Button
+              onClick={onSave}
+              disabled={saving}
+              className="bg-green-600 hover:bg-green-700"
+            >
               {saving ? "Saving..." : "Save Changes"}
             </Button>
           </div>

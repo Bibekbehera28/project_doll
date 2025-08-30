@@ -164,14 +164,17 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     try {
       await sbSignOut?.();
     } catch (error) {
-      console.warn("Supabase signOut failed or not configured:", (error as any)?.message || error);
+      console.warn(
+        "Supabase signOut failed or not configured:",
+        (error as any)?.message || error,
+      );
     }
     try {
       appLogout?.();
     } catch (e) {
       console.warn("App logout failed:", (e as any)?.message || e);
     }
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -308,7 +311,11 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                       layoutId="activeIndicator"
                       className="w-2 h-2 bg-white rounded-full"
                       initial={false}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </Link>
