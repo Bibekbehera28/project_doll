@@ -267,7 +267,9 @@ const App = () => {
                   path="/dashboard"
                   element={
                     <ProtectedRoute>
-                      <Dashboard />
+                      <AppLayout>
+                        <Dashboard />
+                      </AppLayout>
                     </ProtectedRoute>
                   }
                 />
@@ -405,7 +407,9 @@ const App = () => {
                   path="/leaderboard"
                   element={
                     <ProtectedRoute>
-                      <Leaderboard />
+                      <AppLayout>
+                        <Leaderboard />
+                      </AppLayout>
                     </ProtectedRoute>
                   }
                 />
