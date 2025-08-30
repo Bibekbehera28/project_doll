@@ -86,7 +86,9 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     // Clear any legacy mock user and start unauthenticated
-    try { localStorage.removeItem("ecosort_user"); } catch {}
+    try {
+      localStorage.removeItem("ecosort_user");
+    } catch {}
     setLoading(false);
   }, []);
 
