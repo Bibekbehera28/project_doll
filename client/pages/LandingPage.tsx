@@ -306,7 +306,7 @@ const LandingPage: React.FC = () => {
                 <h1 className="text-xl font-bold bg-gradient-to-r from-eco-primary to-eco-secondary bg-clip-text text-transparent">
                   Green India
                 </h1>
-                <p className="text-sm text-slate-600">Smart Waste Management</p>
+                <p className="text-sm font-medium text-eco-secondary dark:text-eco-secondary">Smart Waste Management</p>
               </div>
             </motion.div>
 

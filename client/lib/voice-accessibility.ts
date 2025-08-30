@@ -125,7 +125,7 @@ const defaultVoiceCommands: VoiceCommand[] = [
     command: "read instructions",
     variations: ["help me", "how to use", "instructions", "guide me"],
     action: "readInstructions",
-    response: "Here are the step-by-step instructions for using EcoSort.",
+    response: "Here are the step-by-step instructions for using Green India.",
     category: "help",
   },
   {
@@ -672,7 +672,7 @@ export const announceAppReady = (
   announceFunction: (message: string) => void,
 ) => {
   announceFunction(
-    "EcoSort app loaded. Voice commands and accessibility features are available.",
+    "Green India app loaded. Voice commands and accessibility features are available.",
   );
 };
 
