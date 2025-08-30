@@ -10,6 +10,9 @@ import { useDropzone } from 'react-dropzone';
 import { Camera, Upload, CheckCircle, AlertTriangle, Leaf, Recycle, Loader2 } from 'lucide-react';
 import { useWasteClassification, validateImageForClassification } from '@/lib/ml-integration';
 import { useAuth } from '../App';
+import { useAuth as useSbAuth } from '@/lib/supabase';
+import { awardPoints } from '@/lib/voucher-operations';
+import { defaults } from '@/lib/config';
 
 type ManualCategory = 'biodegradable' | 'recyclable' | 'hazardous';
 
@@ -244,4 +247,3 @@ const WasteClassification: React.FC = () => {
 };
 
 export default WasteClassification;
-
