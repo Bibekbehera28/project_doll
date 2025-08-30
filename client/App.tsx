@@ -252,9 +252,7 @@ const App = () => {
                   path="/"
                   element={
                     <PublicRoute>
-                      <AppLayout>
-                        <LandingPage />
-                      </AppLayout>
+                      <LandingPage />
                     </PublicRoute>
                   }
                 />
