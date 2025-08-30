@@ -260,9 +260,7 @@ const App = () => {
                   path="/login"
                   element={
                     <PublicRoute>
-                      <AppLayout>
-                        <LoginPage />
-                      </AppLayout>
+                      <LoginPage />
                     </PublicRoute>
                   }
                 />
@@ -270,9 +268,7 @@ const App = () => {
                   path="/signup"
                   element={
                     <PublicRoute>
-                      <AppLayout>
-                        <SignupPage />
-                      </AppLayout>
+                      <SignupPage />
                     </PublicRoute>
                   }
                 />
