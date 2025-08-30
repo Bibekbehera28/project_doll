@@ -370,6 +370,13 @@ export default function Dashboard() {
                   href: "/scan",
                 },
                 {
+                  title: "Assessment",
+                  description: "Eco readiness",
+                  icon: Target,
+                  color: "from-teal-500 to-cyan-600",
+                  href: "/assessment",
+                },
+                {
                   title: "Find Centers",
                   description: "Recycling locations",
                   icon: MapPin,
