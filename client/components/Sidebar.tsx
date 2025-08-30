@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -20,7 +20,8 @@ import {
   TrendingUp,
   Bell,
 } from "lucide-react";
-import { useAuth, useUserProfile, mockData } from "@/lib/supabase";
+import { useAuth as useSbAuth, useUserProfile, mockData } from "@/lib/supabase";
+import { useAuth as useAppAuth } from "../App";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -41,16 +42,46 @@ const navigationItems = [
     description: "AI classification",
   },
   {
+    title: "Schedule Pickup",
+    href: "/pickup",
+    icon: Bell,
+    description: "Book collection",
+  },
+  {
+    title: "Smart Bins",
+    href: "/smart-bins",
+    icon: MapPin,
+    description: "IoT demo",
+  },
+  {
+    title: "Report Issue",
+    href: "/report",
+    icon: Users,
+    description: "Dumping/Hazard",
+  },
+  {
     title: "Recycling Centers",
     href: "/centers",
     icon: MapPin,
     description: "Find nearby facilities",
   },
   {
+    title: "Buy-Back",
+    href: "/buyback",
+    icon: Coins,
+    description: "Sell recyclables",
+  },
+  {
     title: "Eco-Points & Rewards",
     href: "/rewards",
     icon: Award,
     description: "Redeem points",
+  },
+  {
+    title: "Messages",
+    href: "/messages",
+    icon: Bell,
+    description: "Chat with worker",
   },
   {
     title: "Community",
@@ -63,6 +94,12 @@ const navigationItems = [
     href: "/analytics",
     icon: BarChart3,
     description: "Track impact",
+  },
+  {
+    title: "Footprint",
+    href: "/footprint",
+    icon: TrendingUp,
+    description: "CO₂ & trees saved",
   },
 ];
 
@@ -77,8 +114,10 @@ const bottomItems = [
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   const location = useLocation();
-  const { user, signOut } = useAuth();
-  const { profile } = useUserProfile(user?.id);
+  const navigate = useNavigate();
+  const { user: sbUser, signOut: sbSignOut } = useSbAuth();
+  const { user: appUser, logout: appLogout } = useAppAuth();
+  const { profile } = useUserProfile(sbUser?.id);
   const userData = profile || mockData.userProfile;
 
   const sidebarVariants: any = {
@@ -123,10 +162,19 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
   const handleLogout = async () => {
     try {
-      await signOut();
+      await sbSignOut?.();
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.warn(
+        "Supabase signOut failed or not configured:",
+        (error as any)?.message || error,
+      );
     }
+    try {
+      appLogout?.();
+    } catch (e) {
+      console.warn("App logout failed:", (e as any)?.message || e);
+    }
+    navigate("/login");
   };
 
   return (
@@ -168,7 +216,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
               <Recycle className="w-5 h-5 text-white" />
             </motion.div>
             <div>
-              <h1 className="text-lg font-bold text-white">EcoSort</h1>
+              <h1 className="text-lg font-bold text-white">Green India</h1>
               <p className="text-xs text-gray-400">Smart Waste Management</p>
             </div>
           </motion.div>
@@ -263,7 +311,11 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                       layoutId="activeIndicator"
                       className="w-2 h-2 bg-white rounded-full"
                       initial={false}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 30,
+                      }}
                     />
                   )}
                 </Link>

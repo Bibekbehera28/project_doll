@@ -361,7 +361,7 @@ export default function Index() {
               </motion.div>
               <div className="hidden sm:block">
                 <h1 className="text-xl font-bold bg-gradient-to-r from-eco-primary to-eco-secondary bg-clip-text text-transparent">
-                  EcoSort
+                  Green India
                 </h1>
                 <p className="text-sm text-slate-600">Smart Waste Management</p>
               </div>
@@ -971,7 +971,7 @@ export default function Index() {
                 <Recycle className="w-6 h-6 text-white" />
               </motion.div>
               <span className="text-2xl font-bold bg-gradient-to-r from-eco-primary to-eco-secondary bg-clip-text text-transparent">
-                EcoSort
+                Green India
               </span>
             </motion.div>
             
@@ -1015,7 +1015,7 @@ export default function Index() {
               animate={{ opacity: 1 }}
               transition={{ delay: 1.4 }}
             >
-              © 2024 EcoSort. Built with ❤️ for a sustainable future.
+              © 2024 Green India. Built with ❤️ for a sustainable future.
             </motion.div>
           </div>
         </div>

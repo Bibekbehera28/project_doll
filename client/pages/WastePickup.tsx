@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { createPickup } from '@/lib/pickups';
+import { useAuth } from '@/lib/supabase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { format } from 'date-fns';
@@ -68,9 +70,26 @@ export default function WastePickup() {
     },
   });
 
+  const { user } = useAuth();
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // TODO: Submit to backend/Supabase
-    console.log(values);
+    const uid = user?.id || 'mock-user-1';
+    const pickup = await createPickup({
+      user_id: uid,
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      address: values.address,
+      waste_type: values.wasteType as any,
+      pickup_date: values.pickupDate.toISOString(),
+      description: values.description,
+    });
+    try {
+      const { requestPermission, scheduleReminder } = await import('@/lib/notifications');
+      requestPermission();
+      const reminderTime = new Date(new Date(values.pickupDate).getTime() - 60 * 60 * 1000);
+      scheduleReminder(reminderTime, 'Pickup reminder', { body: `Pickup today for ${pickup.waste_type}` });
+    } catch {}
     setSubmitted(true);
   };
 

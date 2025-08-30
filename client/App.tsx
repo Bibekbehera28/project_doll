@@ -15,16 +15,23 @@ import Dashboard from "./pages/Dashboard";
 import WasteClassification from "./pages/WasteClassification";
 import RecyclingCenters from "./pages/RecyclingCenters";
 import Rewards from "./pages/Rewards";
+import BuyBackPage from "./pages/BuyBack";
 import Analytics from "./pages/Analytics";
+import FootprintPage from "./pages/Footprint";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Assessment from "./pages/Assessment";
 import ARScanner from "./pages/ARScanner";
 import Leaderboard from "./pages/Leaderboard";
+import SmartBinsPage from "./pages/SmartBins";
 import NotFound from "./pages/NotFound";
+import WastePickup from "./pages/WastePickup";
+import ReportIssue from "./pages/ReportIssue";
+import MessagesPage from "./pages/Messages";
+import SettingsPage from "./pages/Settings";
 
 // Import components
-import Layout from "./components/Layout";
+import DashboardLayout from "./components/DashboardLayout";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { useAuth as useSupabaseAuth } from "@/lib/supabase";
 import { validateConfig } from "@/lib/config";
@@ -65,19 +72,21 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
 
 // Mock authentication provider
-const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Check for stored user session
-    const storedUser = localStorage.getItem('ecosort_user');
+    const storedUser = localStorage.getItem("ecosort_user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -87,90 +96,104 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   const login = async (email: string, password: string): Promise<boolean> => {
     setLoading(true);
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     // Mock successful login for demo@ecosort.app
-    if (email === 'demo@ecosort.app' && password === 'password') {
+    if (email === "demo@ecosort.app" && password === "password") {
       const mockUser: User = {
-        id: 'user-123',
-        name: 'Alex Chen',
+        id: "user-123",
+        name: "Alex Chen",
         email: email,
-        avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
+        avatar:
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
         points: 2156,
-        level: 'Eco Champion',
+        level: "Eco Champion",
         wasteClassified: 187,
-        joinedDate: '2024-01-15',
+        joinedDate: "2024-01-15",
         ecoScore: 89,
-        badges: ['first-sort', 'eco-warrior', 'plastic-saver', 'green-champion'],
+        badges: [
+          "first-sort",
+          "eco-warrior",
+          "plastic-saver",
+          "green-champion",
+        ],
         preferences: {
           darkMode: false,
           notifications: true,
-          language: 'en'
-        }
+          language: "en",
+        },
       };
       setUser(mockUser);
-      localStorage.setItem('ecosort_user', JSON.stringify(mockUser));
+      localStorage.setItem("ecosort_user", JSON.stringify(mockUser));
       setLoading(false);
       return true;
     }
-    
+
     setLoading(false);
     return false;
   };
 
-  const signup = async (name: string, email: string, password: string): Promise<boolean> => {
+  const signup = async (
+    name: string,
+    email: string,
+    password: string,
+  ): Promise<boolean> => {
     setLoading(true);
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const mockUser: User = {
       id: `user-${Date.now()}`,
       name: name,
       email: email,
       points: 0,
-      level: 'Beginner',
+      level: "Beginner",
       wasteClassified: 0,
-      joinedDate: new Date().toISOString().split('T')[0],
+      joinedDate: new Date().toISOString().split("T")[0],
       ecoScore: 0,
       badges: [],
       preferences: {
         darkMode: false,
         notifications: true,
-        language: 'en'
-      }
+        language: "en",
+      },
     };
-    
+
     setUser(mockUser);
-    localStorage.setItem('ecosort_user', JSON.stringify(mockUser));
+    localStorage.setItem("ecosort_user", JSON.stringify(mockUser));
     setLoading(false);
     return true;
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('ecosort_user');
+    localStorage.removeItem("ecosort_user");
   };
 
   const updateUser = (updates: Partial<User>) => {
     if (user) {
       const updatedUser = { ...user, ...updates };
       setUser(updatedUser);
-      localStorage.setItem('ecosort_user', JSON.stringify(updatedUser));
+      localStorage.setItem("ecosort_user", JSON.stringify(updatedUser));
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, signup, logout, updateUser, loading }}>
+    <AuthContext.Provider
+      value={{ user, login, signup, logout, updateUser, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
 // Protected Route Component
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { user, loading } = useAuth();
   const { user: sbUser, loading: sbLoading } = useSupabaseAuth();
-  
+
   if (loading || sbLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -178,7 +201,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
       </div>
     );
   }
-  
+
   const isAuthed = !!user || !!sbUser;
   return isAuthed ? <>{children}</> : <Navigate to="/login" replace />;
 };
@@ -187,7 +210,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, loading } = useAuth();
   const { user: sbUser, loading: sbLoading } = useSupabaseAuth();
-  
+
   if (loading || sbLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -195,19 +218,19 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       </div>
     );
   }
-  
+
   const isAuthed = !!user || !!sbUser;
   return !isAuthed ? <>{children}</> : <Navigate to="/dashboard" replace />;
 };
 
-// Layout wrapper for authenticated pages
+// Unified layout wrapper (always shows Sidebar via DashboardLayout)
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <Layout>
+    <DashboardLayout>
       {children}
       <Toaster />
       <Sonner />
-    </Layout>
+    </DashboardLayout>
   );
 };
 
@@ -225,49 +248,57 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 {/* Public Routes */}
-                <Route 
-                  path="/" 
+                <Route
+                  path="/"
                   element={
                     <PublicRoute>
-                      <LandingPage />
+                      <AppLayout>
+                        <LandingPage />
+                      </AppLayout>
                     </PublicRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/login" 
+                <Route
+                  path="/login"
                   element={
                     <PublicRoute>
-                      <LoginPage />
+                      <AppLayout>
+                        <LoginPage />
+                      </AppLayout>
                     </PublicRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/signup" 
+                <Route
+                  path="/signup"
                   element={
                     <PublicRoute>
-                      <SignupPage />
+                      <AppLayout>
+                        <SignupPage />
+                      </AppLayout>
                     </PublicRoute>
-                  } 
+                  }
                 />
-                
+
                 {/* Protected Routes */}
                 <Route
                   path="/dashboard"
                   element={
                     <ProtectedRoute>
-                      <Dashboard />
+                      <AppLayout>
+                        <Dashboard />
+                      </AppLayout>
                     </ProtectedRoute>
                   }
                 />
-                <Route 
-                  path="/assessment" 
+                <Route
+                  path="/assessment"
                   element={
                     <ProtectedRoute>
                       <AppLayout>
                         <Assessment />
                       </AppLayout>
                     </ProtectedRoute>
-                  } 
+                  }
                 />
                 <Route
                   path="/classify"
@@ -299,25 +330,85 @@ const App = () => {
                     </ProtectedRoute>
                   }
                 />
-                <Route 
-                  path="/centers" 
+                <Route
+                  path="/centers"
                   element={
                     <ProtectedRoute>
                       <AppLayout>
                         <RecyclingCenters />
                       </AppLayout>
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/rewards" 
+                <Route
+                  path="/buyback"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <BuyBackPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/smart-bins"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <SmartBinsPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/rewards"
                   element={
                     <ProtectedRoute>
                       <AppLayout>
                         <Rewards />
                       </AppLayout>
                     </ProtectedRoute>
-                  } 
+                  }
+                />
+                <Route
+                  path="/pickup"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <WastePickup />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/report"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <ReportIssue />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/messages"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <MessagesPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <SettingsPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
                 />
                 <Route
                   path="/analytics"
@@ -330,34 +421,46 @@ const App = () => {
                   }
                 />
                 <Route
-                  path="/leaderboard"
+                  path="/footprint"
                   element={
                     <ProtectedRoute>
-                      <Leaderboard />
+                      <AppLayout>
+                        <FootprintPage />
+                      </AppLayout>
                     </ProtectedRoute>
                   }
                 />
-                <Route 
-                  path="/profile" 
+                <Route
+                  path="/leaderboard"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <Leaderboard />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
                   element={
                     <ProtectedRoute>
                       <AppLayout>
                         <Profile />
                       </AppLayout>
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/about" 
+                <Route
+                  path="/about"
                   element={
                     <ProtectedRoute>
                       <AppLayout>
                         <About />
                       </AppLayout>
                     </ProtectedRoute>
-                  } 
+                  }
                 />
-                
+
                 {/* Catch all route */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

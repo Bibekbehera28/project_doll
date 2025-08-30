@@ -230,7 +230,7 @@ const LandingPage: React.FC = () => {
       name: "Sarah Chen",
       role: "Environmental Activist",
       content:
-        "EcoSort has revolutionized how our community approaches waste management. The AI classification is incredibly accurate!",
+        "Green India has revolutionized how our community approaches waste management. The AI classification is incredibly accurate!",
       rating: 5,
       avatar:
         "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
@@ -304,7 +304,7 @@ const LandingPage: React.FC = () => {
               </motion.div>
               <div>
                 <h1 className="text-xl font-bold bg-gradient-to-r from-eco-primary to-eco-secondary bg-clip-text text-transparent">
-                  EcoSort
+                  Green India
                 </h1>
                 <p className="text-sm text-slate-600">Smart Waste Management</p>
               </div>
@@ -695,7 +695,7 @@ const LandingPage: React.FC = () => {
                 >
                   <Recycle className="w-6 h-6 text-white" />
                 </motion.div>
-                <span className="text-2xl font-bold">EcoSort</span>
+                <span className="text-2xl font-bold">Green India</span>
               </div>
               <p className="text-slate-300 mb-6 leading-relaxed max-w-md">
                 Transforming waste management through AI technology, community
@@ -766,7 +766,7 @@ const LandingPage: React.FC = () => {
             className="border-t border-slate-700 mt-12 pt-8 text-center text-slate-400"
           >
             <p>
-              © 2024 EcoSort. Built with ❤️ for a sustainable future. All rights
+              © 2024 Green India. Built with ❤️ for a sustainable future. All rights
               reserved.
             </p>
           </motion.div>

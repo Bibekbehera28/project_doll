@@ -72,7 +72,6 @@ import {
 
 // Import auth and user data
 import { useAuth, useUserProfile, mockData, supabase } from "@/lib/supabase";
-import DashboardLayout from "@/components/DashboardLayout";
 
 // Component for animated counter
 const AnimatedCounter = ({
@@ -524,7 +523,7 @@ export default function Rewards() {
   };
 
   return (
-    <DashboardLayout>
+    <>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -990,6 +989,6 @@ export default function Rewards() {
           )}
         </DialogContent>
       </Dialog>
-    </DashboardLayout>
+    </>
   );
 }

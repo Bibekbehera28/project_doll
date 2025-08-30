@@ -18,7 +18,6 @@ import {
   Calendar,
   Crown,
 } from "lucide-react";
-import DashboardLayout from "@/components/DashboardLayout";
 
 // Mock leaderboard data
 const mockLeaderboardData = [
@@ -127,225 +126,221 @@ export default function Leaderboard() {
   };
 
   return (
-    <DashboardLayout>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-6"
+    >
+      {/* Header */}
+      <motion.div variants={itemVariants}>
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-white mb-2">
+            🏆 Community Leaderboard
+          </h1>
+          <p className="text-gray-400 text-lg">
+            See how you stack up against other eco-warriors
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Stats Cards */}
       <motion.div
         variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="space-y-6"
+        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
       >
-        {/* Header */}
-        <motion.div variants={itemVariants}>
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">
-              🏆 Community Leaderboard
-            </h1>
-            <p className="text-gray-400 text-lg">
-              See how you stack up against other eco-warriors
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Stats Cards */}
-        <motion.div
-          variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
-        >
-          {[
-            {
-              title: "Total Users",
-              value: "1,247",
-              icon: Users,
-              color: "text-blue-400",
-              change: "+45 this week",
-            },
-            {
-              title: "Active This Week",
-              value: "892",
-              icon: TrendingUp,
-              color: "text-green-400",
-              change: "+12% increase",
-            },
-            {
-              title: "Items Classified",
-              value: "15,680",
-              icon: Trophy,
-              color: "text-purple-400",
-              change: "+234 today",
-            },
-          ].map((stat, index) => (
-            <motion.div key={stat.title} variants={itemVariants}>
-              <Card
-                className="border-0 bg-slate-800/50 backdrop-blur-sm"
-                style={{ backgroundColor: "rgb(15, 23, 42)" }}
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="p-3 rounded-xl bg-slate-700/50">
-                      <stat.icon className={`w-6 h-6 ${stat.color}`} />
-                    </div>
-                    <Badge
-                      variant="secondary"
-                      className="bg-green-500/20 text-green-400 border-0 text-xs"
-                    >
-                      {stat.change}
-                    </Badge>
+        {[
+          {
+            title: "Total Users",
+            value: "1,247",
+            icon: Users,
+            color: "text-blue-400",
+            change: "+45 this week",
+          },
+          {
+            title: "Active This Week",
+            value: "892",
+            icon: TrendingUp,
+            color: "text-green-400",
+            change: "+12% increase",
+          },
+          {
+            title: "Items Classified",
+            value: "15,680",
+            icon: Trophy,
+            color: "text-purple-400",
+            change: "+234 today",
+          },
+        ].map((stat, index) => (
+          <motion.div key={stat.title} variants={itemVariants}>
+            <Card
+              className="border-0 bg-slate-800/50 backdrop-blur-sm"
+              style={{ backgroundColor: "rgb(15, 23, 42)" }}
+            >
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 rounded-xl bg-slate-700/50">
+                    <stat.icon className={`w-6 h-6 ${stat.color}`} />
                   </div>
-                  <h3 className="text-gray-300 text-sm font-medium mb-2">
-                    {stat.title}
-                  </h3>
-                  <div className={`text-3xl font-bold ${stat.color}`}>
-                    {stat.value}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Leaderboard Tabs */}
-        <motion.div variants={itemVariants}>
-          <Tabs defaultValue="weekly" className="space-y-6">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 bg-slate-800/50 border border-slate-700/50">
-              <TabsTrigger
-                value="weekly"
-                className="data-[state=active]:bg-red-600 data-[state=active]:text-white"
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                Weekly
-              </TabsTrigger>
-              <TabsTrigger
-                value="monthly"
-                className="data-[state=active]:bg-red-600 data-[state=active]:text-white"
-              >
-                Monthly
-              </TabsTrigger>
-              <TabsTrigger
-                value="alltime"
-                className="data-[state=active]:bg-red-600 data-[state=active]:text-white"
-              >
-                All Time
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="weekly" className="space-y-4">
-              <Card
-                className="border-0 bg-slate-800/50 backdrop-blur-sm"
-                style={{ backgroundColor: "rgb(15, 23, 42)" }}
-              >
-                <CardHeader>
-                  <CardTitle className="text-white">
-                    Weekly Leaderboard
-                  </CardTitle>
-                  <CardDescription className="text-gray-400">
-                    Top performers this week
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {mockLeaderboardData.map((user, index) => (
-                    <motion.div
-                      key={user.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className={`flex items-center gap-4 p-4 rounded-xl border-l-4 ${getRankColor(
-                        user.rank,
-                      )} hover:bg-slate-700/20 transition-all duration-300`}
-                    >
-                      <div className="flex items-center gap-3">
-                        {getRankIcon(user.rank)}
-                        <Avatar className="h-12 w-12 border-2 border-slate-600">
-                          <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                      </div>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-white truncate">
-                            {user.name}
-                          </h3>
-                          <Badge
-                            variant="secondary"
-                            className="bg-purple-500/20 text-purple-400 border-0 text-xs"
-                          >
-                            {user.level}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-gray-400">
-                          {user.wasteClassified} items classified
-                        </p>
-                      </div>
-
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-white">
-                          {user.points.toLocaleString()}
-                        </div>
-                        <div className="flex items-center gap-1 text-sm">
-                          {user.change.startsWith("+") ? (
-                            <TrendingUp className="w-3 h-3 text-green-400" />
-                          ) : user.change === "0" ? (
-                            <div className="w-3 h-3" />
-                          ) : (
-                            <TrendingUp className="w-3 h-3 text-red-400 rotate-180" />
-                          )}
-                          <span
-                            className={
-                              user.change.startsWith("+")
-                                ? "text-green-400"
-                                : user.change === "0"
-                                  ? "text-gray-400"
-                                  : "text-red-400"
-                            }
-                          >
-                            {user.change}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="monthly" className="space-y-4">
-              <Card
-                className="border-0 bg-slate-800/50 backdrop-blur-sm"
-                style={{ backgroundColor: "rgb(15, 23, 42)" }}
-              >
-                <CardContent className="p-8 text-center">
-                  <Trophy className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    Monthly Leaderboard
-                  </h3>
-                  <p className="text-gray-400">
-                    Monthly rankings coming soon! Keep sorting waste to climb
-                    the weekly leaderboard.
-                  </p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="alltime" className="space-y-4">
-              <Card
-                className="border-0 bg-slate-800/50 backdrop-blur-sm"
-                style={{ backgroundColor: "rgb(15, 23, 42)" }}
-              >
-                <CardContent className="p-8 text-center">
-                  <Crown className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                  <h3 className="text-xl font-semibold text-white mb-2">
-                    All-Time Champions
-                  </h3>
-                  <p className="text-gray-400">
-                    All-time rankings coming soon! Join the community and start
-                    making an impact.
-                  </p>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </motion.div>
+                  <Badge
+                    variant="secondary"
+                    className="bg-green-500/20 text-green-400 border-0 text-xs"
+                  >
+                    {stat.change}
+                  </Badge>
+                </div>
+                <h3 className="text-gray-300 text-sm font-medium mb-2">
+                  {stat.title}
+                </h3>
+                <div className={`text-3xl font-bold ${stat.color}`}>
+                  {stat.value}
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        ))}
       </motion.div>
-    </DashboardLayout>
+
+      {/* Leaderboard Tabs */}
+      <motion.div variants={itemVariants}>
+        <Tabs defaultValue="weekly" className="space-y-6">
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 bg-slate-800/50 border border-slate-700/50">
+            <TabsTrigger
+              value="weekly"
+              className="data-[state=active]:bg-red-600 data-[state=active]:text-white"
+            >
+              <Calendar className="w-4 h-4 mr-2" />
+              Weekly
+            </TabsTrigger>
+            <TabsTrigger
+              value="monthly"
+              className="data-[state=active]:bg-red-600 data-[state=active]:text-white"
+            >
+              Monthly
+            </TabsTrigger>
+            <TabsTrigger
+              value="alltime"
+              className="data-[state=active]:bg-red-600 data-[state=active]:text-white"
+            >
+              All Time
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="weekly" className="space-y-4">
+            <Card
+              className="border-0 bg-slate-800/50 backdrop-blur-sm"
+              style={{ backgroundColor: "rgb(15, 23, 42)" }}
+            >
+              <CardHeader>
+                <CardTitle className="text-white">Weekly Leaderboard</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Top performers this week
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {mockLeaderboardData.map((user, index) => (
+                  <motion.div
+                    key={user.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`flex items-center gap-4 p-4 rounded-xl border-l-4 ${getRankColor(
+                      user.rank,
+                    )} hover:bg-slate-700/20 transition-all duration-300`}
+                  >
+                    <div className="flex items-center gap-3">
+                      {getRankIcon(user.rank)}
+                      <Avatar className="h-12 w-12 border-2 border-slate-600">
+                        <AvatarImage src={user.avatar} alt={user.name} />
+                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-white truncate">
+                          {user.name}
+                        </h3>
+                        <Badge
+                          variant="secondary"
+                          className="bg-purple-500/20 text-purple-400 border-0 text-xs"
+                        >
+                          {user.level}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-gray-400">
+                        {user.wasteClassified} items classified
+                      </p>
+                    </div>
+
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-white">
+                        {user.points.toLocaleString()}
+                      </div>
+                      <div className="flex items-center gap-1 text-sm">
+                        {user.change.startsWith("+") ? (
+                          <TrendingUp className="w-3 h-3 text-green-400" />
+                        ) : user.change === "0" ? (
+                          <div className="w-3 h-3" />
+                        ) : (
+                          <TrendingUp className="w-3 h-3 text-red-400 rotate-180" />
+                        )}
+                        <span
+                          className={
+                            user.change.startsWith("+")
+                              ? "text-green-400"
+                              : user.change === "0"
+                                ? "text-gray-400"
+                                : "text-red-400"
+                          }
+                        >
+                          {user.change}
+                        </span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="monthly" className="space-y-4">
+            <Card
+              className="border-0 bg-slate-800/50 backdrop-blur-sm"
+              style={{ backgroundColor: "rgb(15, 23, 42)" }}
+            >
+              <CardContent className="p-8 text-center">
+                <Trophy className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  Monthly Leaderboard
+                </h3>
+                <p className="text-gray-400">
+                  Monthly rankings coming soon! Keep sorting waste to climb the
+                  weekly leaderboard.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="alltime" className="space-y-4">
+            <Card
+              className="border-0 bg-slate-800/50 backdrop-blur-sm"
+              style={{ backgroundColor: "rgb(15, 23, 42)" }}
+            >
+              <CardContent className="p-8 text-center">
+                <Crown className="w-16 h-16 mx-auto mb-4 text-gray-400" />
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  All-Time Champions
+                </h3>
+                <p className="text-gray-400">
+                  All-time rankings coming soon! Join the community and start
+                  making an impact.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </motion.div>
+    </motion.div>
   );
 }
