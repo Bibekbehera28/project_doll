@@ -28,6 +28,7 @@ import NotFound from "./pages/NotFound";
 import WastePickup from "./pages/WastePickup";
 import ReportIssue from "./pages/ReportIssue";
 import MessagesPage from "./pages/Messages";
+import SettingsPage from "./pages/Settings";
 
 // Import components
 import DashboardLayout from "./components/DashboardLayout";
@@ -379,6 +380,16 @@ const App = () => {
                     <ProtectedRoute>
                       <AppLayout>
                         <MessagesPage />
+                      </AppLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute>
+                      <AppLayout>
+                        <SettingsPage />
                       </AppLayout>
                     </ProtectedRoute>
                   }
