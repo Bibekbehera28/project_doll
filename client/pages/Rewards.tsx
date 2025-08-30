@@ -523,7 +523,7 @@ export default function Rewards() {
   };
 
   return (
-    <DashboardLayout>
+    <>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -989,6 +989,6 @@ export default function Rewards() {
           )}
         </DialogContent>
       </Dialog>
-    </DashboardLayout>
+    </>
   );
 }
