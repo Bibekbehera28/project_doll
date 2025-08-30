@@ -233,8 +233,12 @@ export default function Dashboard() {
                   <Target className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-semibold">Start your Assessment</h2>
-                  <p className="text-white/90">Scan waste → Select center → Scan QR → Earn rewards</p>
+                  <h2 className="text-xl font-semibold">
+                    Start your Assessment
+                  </h2>
+                  <p className="text-white/90">
+                    Scan waste → Select center → Scan QR → Earn rewards
+                  </p>
                 </div>
               </div>
               <Link to="/assessment">

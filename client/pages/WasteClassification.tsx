@@ -112,7 +112,8 @@ const WasteClassification: React.FC = () => {
       } catch (e) {
         const msg = (e as any)?.message || String(e);
         console.warn("Failed to persist points:", msg);
-        const type = (classification?.type || "recyclable") as keyof typeof defaults.pointsPerClassification;
+        const type = (classification?.type ||
+          "recyclable") as keyof typeof defaults.pointsPerClassification;
         const pts = defaults.pointsPerClassification[type] ?? 10;
         updateUser?.({ points: (user?.points || 0) + pts });
       }
